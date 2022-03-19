@@ -1,0 +1,36 @@
+app: learning
+service: hello
+org: sabiai
+
+plugins:
+  - serverless-domain-manager ##### PLUGIN SETUP
+
+custom:
+  customDomain:
+    domainName: "learning.integration.sabi.ai"
+    certificateName: "*.integration.sabi.ai"
+    createRoute53Record: true
+    endpointType: "regional"
+    securityPolicy: tls_1_2
+    autoDomain: true
+    apiType: http
+
+package:
+  exclude:
+    - "node_modules/**"
+
+provider:
+  name: aws
+  runtime: python3.8
+  region: us-west-2
+  environment:
+    DB_PASSWORD: ${ssm:/my_secrets/secret_phrase}
+
+functions:
+  hello:
+    name: hello
+    handler: hello.handler
+    events:
+      - httpApi:
+          method: GET
+          path: /hello/{name}

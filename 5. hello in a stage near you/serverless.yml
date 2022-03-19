@@ -1,0 +1,63 @@
+app: learning
+service: hello
+org: sabiai
+
+plugins:
+  - serverless-domain-manager ##### PLUGIN SETUP
+
+custom:
+  integration:
+    DomainName: integration.sabi.ai
+  staging:
+    DomainName: staging.sabi.ai
+  customDomain:
+    domainName: "learning.${self:custom.${opt:stage}.DomainName}"
+    certificateName: "*.${self:custom.${opt:stage}.DomainName}"
+    createRoute53Record: true
+    endpointType: "regional"
+    securityPolicy: tls_1_2
+    autoDomain: true
+    apiType: http
+
+package:
+  exclude:
+    - "node_modules/**"
+
+provider:
+  name: aws
+  runtime: python3.8
+  region: us-west-2
+  environment:
+    DB_PASSWORD: ${ssm:/my_secrets/secret_phrase}
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:Scan
+        - dynamodb:PutItem
+      Resource:
+        - Fn::Sub: "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/usersTable"
+
+functions:
+  hello:
+    name: hello
+    handler: hello.handler
+    events:
+      - httpApi:
+          method: GET
+          path: /hello/{name}
+
+resources: # CloudFormation template syntax from here on.
+  Resources:
+    usersTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: usersTable
+        AttributeDefinitions:
+          - AttributeName: name
+            AttributeType: S
+        KeySchema:
+          - AttributeName: name
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
