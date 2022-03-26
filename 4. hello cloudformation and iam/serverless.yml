@@ -3,12 +3,11 @@ service: hello
 org: sabiai
 
 plugins:
-  - serverless-domain-manager ##### PLUGIN SETUP
+  - serverless-domain-manager
 
 custom:
   customDomain:
     domainName: "learning.integration.sabi.ai"
-    #basePath: "${self:custom.Version}/clients" # This will be prefixed to all routes
     certificateName: "*.integration.sabi.ai"
     createRoute53Record: true
     endpointType: "regional"

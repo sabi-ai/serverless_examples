@@ -2,16 +2,12 @@ app: learning
 service: hello
 org: sabiai
 
-package:
-  exclude:
-    - "node_modules/**"
-
 provider:
   name: aws
   runtime: python3.8
   region: us-west-2
   environment:
-    DB_PASSWORD: ${ssm:/my_secrets/secret_phrase} ##### Systems Manager Parameter Store
+    DB_PASSWORD: ${ssm:/my_secrets/secret_phrase}
 
 functions:
   hello:

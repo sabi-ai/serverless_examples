@@ -13,3 +13,7 @@ https://us-east-1.console.aws.amazon.com/route53/v2/hostedzones#
 ## Certificate Manager:
 
 https://us-west-2.console.aws.amazon.com/acm/home?region=us-west-2#/certificates/list
+
+## Cloud Formation:
+
+https://us-west-2.console.aws.amazon.com/cloudformation/home?region=us-west-2#/stacks?filteringStatus=active&filteringText=&viewNested=true&hideStacks=false

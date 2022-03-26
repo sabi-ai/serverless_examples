@@ -3,7 +3,7 @@ service: hello
 org: sabiai
 
 plugins:
-  - serverless-domain-manager ##### PLUGIN SETUP
+  - serverless-domain-manager
 
 custom:
   customDomain:

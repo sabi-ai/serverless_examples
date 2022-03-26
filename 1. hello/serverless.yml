@@ -2,10 +2,6 @@ app: learning
 service: hello
 org: sabiai
 
-package:
-  exclude:
-    - "node_modules/**"
-
 provider:
   name: aws
   runtime: python3.8

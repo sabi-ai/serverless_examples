@@ -2,9 +2,9 @@ serverless invoke local -f hello -s integration
 serverless deploy -s integration
 serverless invoke -f hello -l -s integration
 
-# Install the plugin:
+## Cloud Formation:
 
-npm install serverless-domain-manager
+https://us-west-2.console.aws.amazon.com/cloudformation/home?region=us-west-2#/stacks?filteringStatus=active&filteringText=&viewNested=true&hideStacks=false
 
 ## DynamoDB:
 
